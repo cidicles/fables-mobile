@@ -21,7 +21,7 @@ export default class Fables extends Component<{}> {
       },
       filters: {
         page: 1,
-        count: 8,
+        count: 100,
         attributes: {}
       },
       ...props

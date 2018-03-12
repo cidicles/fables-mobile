@@ -13,10 +13,6 @@ import { apiBase } from '../const';
 import { goFetch } from '../utils';
 import { NavigationActions } from 'react-navigation'
 
-
-
-
-
 class NewFable extends Component<{}> {
   static navigationOptions = {
     title: 'New Fable',

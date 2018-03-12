@@ -7,19 +7,44 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { base } from '../style/core.js';
+import { apiBase } from '../const';
+import { goFetch } from '../utils';
+import { changeUser } from '../redux/actions';
 
 class Home extends Component<{}> {
   static navigationOptions = {
-    title: 'Home',
+    title: 'Home'
+  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      ...props,
+      status: ''
+    };
+  }
+  logOut(){
+    let feedUrl = `${apiBase}user/logout`;
+    let {token} = this.props.ident.user;
+    goFetch('post', feedUrl, {}, token).then((res) => {
+      if(res.error){
+        this.setState({
+          status: res.message
+        });
+      } else {
+        this.props.dispatch(changeUser({
+          username: '',
+          token: ''
+        }));
+      }
+    });
   }
   render() {
     const { navigate } = this.props.navigation;
     const { ident } = this.props;
+    let { status } = this.state;
     return (
       <View style={base.view}>
-        <Text style={base.red}>
-          Welcome to Fables {ident.user.username}
-        </Text>
+        { status != '' && <Text>{ status }</Text> }
         <Button
           title="Fables"
           onPress={() => navigate('Fables')}
@@ -41,6 +66,15 @@ class Home extends Component<{}> {
           title="New Fable"
           onPress={() => navigate('NewFable')}
         />
+        {
+          ident.token !== '' &&
+          <View>
+            <Button
+              title="Logout"
+              onPress={() => this.logOut()}
+            />
+          </View>
+        }
       </View>
     );
   }

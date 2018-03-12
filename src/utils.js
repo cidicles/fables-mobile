@@ -30,3 +30,10 @@ export const goFetch = (method, url, postData, jwt) => {
     });
   });
 }
+
+export const AuthenticatedOwner = (creator, owner) => {
+  if(creator === owner){
+    return true;
+  }
+  return false;
+}

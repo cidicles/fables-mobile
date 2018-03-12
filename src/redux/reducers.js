@@ -1,33 +1,11 @@
-import { AsyncStorage } from 'react-native';
-import Storage from 'react-native-storage';
-
-// Global Async Storage
-let storage = new Storage({
-	size: 1000,
-	storageBackend: AsyncStorage,
-	defaultExpires: null,
-	enableCache: true
-})
-global.storage = storage;
-
-async function loadState() {
-  storage.load({
-  	key: 'appState',
-  	autoSync: false
-  }).then(ret => {
-  	return ret;
-  }).catch(err => {
-  	console.warn(err.message);
-  });
-}
-
-// Redux Init
+// Redux 
 const initialState = {
   ident: {
     user: {
       username: 'nobody'
     },
-    token: {}
+    token: {},
+		messages: {}
   }
 };
 
@@ -43,6 +21,10 @@ const mainReducer = (state = {}, action) => {
     case 'CHANGE_LOCALSTATE':
       return Object.assign({}, state, {
         localState: action.localState
+      });
+		case 'CHANGE_MESSAGES':
+      return Object.assign({}, state, {
+        messages: action.messages
       });
     default:
       return initialState;

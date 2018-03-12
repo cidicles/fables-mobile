@@ -51,10 +51,7 @@ class Login extends Component<{}> {
 
     return (
       <View style={base.view}>
-
         { status != '' && <Text>{ status }</Text> }
-
-
         <Text style={base.red}>
           Username
         </Text>
@@ -63,7 +60,6 @@ class Login extends Component<{}> {
           onChangeText={(username) => this.setState({username})}
           value={this.state.username}
         />
-
         <Text style={base.red}>
           Password
         </Text>
@@ -72,12 +68,10 @@ class Login extends Component<{}> {
           onChangeText={(password) => this.setState({password})}
           value={this.state.password}
         />
-
         <Button
           title="Submit"
           onPress={() => this.sendAuth()}
         />
-
       </View>
     );
   }
