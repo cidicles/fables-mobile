@@ -13,7 +13,8 @@ import { changeUser } from '../redux/actions';
 
 class Home extends Component<{}> {
   static navigationOptions = {
-    title: 'Home'
+    title: 'Home',
+    header: null
   }
   constructor(props) {
     super(props);

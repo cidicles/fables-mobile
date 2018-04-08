@@ -33,6 +33,9 @@ const AppNavigator = StackNavigator({
 	NewFable: { screen: NewFable },
 	Register: { screen: Register },
 	Login: { screen: Login }
+},{
+  initialRouteName: 'Home',
+  headerMode: 'screen'
 });
 
 // Create the App
