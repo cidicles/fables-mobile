@@ -26,6 +26,7 @@ export default class Register extends Component<{}> {
   sendAuth(){
     let feedUrl = `${apiBase}user`;
     let { username, password } = this.state;
+    const { navigate } = this.props.navigation;
     goFetch('post', feedUrl, { username, password }).then((res) => {
       if(res.error){
         this.setState({
@@ -35,6 +36,7 @@ export default class Register extends Component<{}> {
         this.setState({
           status: res.message
         });
+        navigate('Home');
       }
     });
   }

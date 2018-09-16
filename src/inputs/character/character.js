@@ -4,11 +4,14 @@ import {
   TextInput,
   View,
   Button,
-  Picker
+  Picker,
+  Modal,
+  TouchableHighlight
 } from 'react-native';
 import { goFetch } from '../../utils';
 import { base } from '../../style/core.js';
 import { apiBase } from '../../const';
+import Icon from 'react-native-ionicons';
 
 export default class Character extends Component<{}> {
   constructor(props) {
@@ -17,6 +20,7 @@ export default class Character extends Component<{}> {
       fableCharacter: '',
       fableType: 'text',
       message: '',
+      modalVisible: false,
       ...props
     };
   }
@@ -45,23 +49,55 @@ export default class Character extends Component<{}> {
       }
     });
   }
+  setModalVisible(visible) {
+    this.setState({
+      modalVisible: visible
+    });
+  }
   render() {
     const { ident, fable } = this.props;
     //console.log(ident, fable)
     return (
       <View>
-        <Text>
-          Character
-        </Text>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(fableCharacter) => this.setState({fableCharacter})}
-          value={this.state.fableCharacter}
-        />
-        <Button
-          title="Add Character"
-          onPress={() => this.sendCharacter()}
-        />
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 22}}>
+            <View>
+              <Text style={{marginTop: 22}}>Add a New Character</Text>
+              <Text>
+                Name
+              </Text>
+              <TextInput
+                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                onChangeText={(fableCharacter) => this.setState({fableCharacter})}
+                value={this.state.fableCharacter}
+              />
+              <Button
+                title="Add Character"
+                onPress={() => this.sendCharacter()}
+              />
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+        <TouchableHighlight
+          onPress={() => {
+            this.setModalVisible(true);
+          }}>
+          <View>
+            <Icon name="person-add" />
+          </View>
+        </TouchableHighlight>
       </View>
     );
   }

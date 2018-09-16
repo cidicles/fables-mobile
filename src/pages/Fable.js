@@ -6,7 +6,8 @@ import {
   View,
   ScrollView,
   Button,
-  Image
+  Image,
+  TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux';
 import { changeMessages } from '../redux/actions';
@@ -16,6 +17,7 @@ import { apiBase } from '../const';
 import Message from '../inputs/message/message';
 import Character from '../inputs/character/character';
 import DisplayMessage from '../display/displayMessage/displayMessage';
+import Icon from 'react-native-ionicons';
 
 class Fable extends Component<{}> {
   static navigationOptions = ({navigation}) => ({
@@ -69,19 +71,19 @@ class Fable extends Component<{}> {
   }
   nextMessage = () => {
     let {length, count} = this.state;
-    console.log(length,count+1, 'sdsdsd');
+    console.log(length,count+1, 'nextMessage');
     if(this.state.count < this.state.length){
       this.setState({
         count: this.state.count < this.state.length ? this.state.count + 1 : this.state.length
       });
     }
   }
-  getMessages(){
-    let {messages} = this.state.fable;
+  getMessages(){    let {messages} = this.state.fable;
     let {count} = this.state;
     let content = [];
     for(let i = 0; i < count; i++){
-      content.push(<DisplayMessage message={messages[i]} />);
+      console.log(messages[i]);
+      content.push(<DisplayMessage key={`message-${i}`} message={messages[i]} />);
     }
     return content;
   }
@@ -90,28 +92,34 @@ class Fable extends Component<{}> {
     const { fable, count, length } = this.state;
     const { ident } = this.props;
     return (
-      <ScrollView
-        style={base.view}
-        ref={ref => this.scrollView = ref}
-        onContentSizeChange={(contentWidth, contentHeight)=>{
-            this.scrollView.scrollToEnd({animated: true});
-        }}>
-        <Text>{count}</Text>
-        { AuthenticatedOwner(fable.creator, ident.user.username) &&
-          <View>
-            { fable &&
-              <View>
-                <Message ident={ident} fable={fable} populateMessages={this.populatePost} />
-              </View>
-            }
-            <Character ident={ident} fable={fable} populateMessages={this.populatePost} />
-          </View>
-        }
-        {fable.messages && <View style={base.scrollView}>
-          {this.getMessages()}
-          {this.ui_GetSend()}
-        </View>}
-      </ScrollView>
+      <View style={{flex: 1, backgroundColor:'grey'}}>
+        <View style={{flex: 1, backgroundColor: 'red'}}>
+          <ScrollView
+            style={base.view}
+            ref={ref => this.scrollView = ref}
+            onContentSizeChange={(contentWidth, contentHeight)=>{
+                this.scrollView.scrollToEnd({animated: true});
+            }}>
+            <Text>{count}</Text>
+            {fable.messages && <View style={base.scrollView}>
+              {this.getMessages()}
+              {this.ui_GetSend()}
+            </View>}
+          </ScrollView>
+        </View>
+        <View style={{height: 100, backgroundColor: 'green'}}>
+          { ident.user && AuthenticatedOwner(fable.creator, ident.user.username) &&
+            <View>
+              { fable &&
+                <View>
+                  <Message ident={ident} fable={fable} populateMessages={this.populatePost} />
+                </View>
+              }
+              <Character ident={ident} fable={fable} populateMessages={this.populatePost} />
+            </View>
+          }
+        </View>
+      </View>
     );
   }
 }

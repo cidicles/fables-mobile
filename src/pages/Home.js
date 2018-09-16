@@ -63,13 +63,14 @@ class Home extends Component<{}> {
             />
           </View>
         }
-        <Button
-          title="New Fable"
-          onPress={() => navigate('NewFable')}
-        />
+
         {
           ident.token !== '' &&
           <View>
+            <Button
+              title="New Fable"
+              onPress={() => navigate('NewFable')}
+            />
             <Button
               title="Logout"
               onPress={() => this.logOut()}

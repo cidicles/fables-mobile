@@ -35,9 +35,9 @@ export default class DisplayMessage extends Component<{}> {
         content.push(
           <View style={base.message} key={`message`}>
             <Text>
-              {message.body}
-              {message.messageType[0]}
-              {message.date}
+              <Text style={base.messageBody}>{message.body}</Text>
+              <Text style={base.messageCharacter}>{message.character}</Text>
+              <Text style={base.messageDate}>{message.date}</Text>
             </Text>
           </View>
         );
@@ -55,9 +55,9 @@ export default class DisplayMessage extends Component<{}> {
         content.push(
           <View style={base.message} key={`message`}>
             <Text>
-              {message.body}
-              {message.messageType[0]}
-              {message.date}
+              <Text style={base.messageBody}>{message.body}</Text>
+              <Text style={base.messageCharacter}>{message.character}</Text>
+              <Text style={base.messageDate}>{message.date}</Text>
             </Text>
           </View>
         );
@@ -65,11 +65,9 @@ export default class DisplayMessage extends Component<{}> {
       default:
         content.push(
           <View style={base.message} key={`message`}>
-            <Text>
-              {message.body}
-              {message.messageType[0]}
-              {message.date}
-            </Text>
+            <Text style={base.messageBody}>{message.body}</Text>
+            <Text style={base.messageCharacter}>{message.character}</Text>
+            <Text style={base.messageDate}>{message.date}</Text>
           </View>
         );
     }
